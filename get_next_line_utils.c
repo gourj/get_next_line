@@ -6,32 +6,38 @@
 /*   By: agurdzhi <agurdzhi@student.42yerevan.am>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 00:54:18 by agurdzhi          #+#    #+#             */
-/*   Updated: 2025/04/09 01:11:43 by agurdzhi         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:23:14 by agurdzhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *str)
 {
 	size_t	indx;
 
 	indx = 0;
-	while (str[indx] != '\0')
+	while (str[indx])
 		indx++;
 	return (indx);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	int		sizetotal;
 	char	*res;
 	int		i;
 	int		j;
 
-	i = 0;
-	sizetotal = ft_strlen(s1) + ft_strlen(s2);
-	res = malloc(sizeof(char) * (sizetotal + 1));
-	if (!res || !s1 || !s2)
+	if (!s1 || !s2)
 		return (NULL);
+	i = 0;
+	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!res)
+	{
+		free(s1);
+		free(s2);
+		return (NULL);
+	}
 	while (s1[i] != '\0')
 	{
 		res[i] = s1[i];
@@ -44,7 +50,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 		j++;
 	}
-	res[sizetotal] = '\0';
+	res[i] = '\0';
 	return (res);
 }
 
@@ -64,4 +70,29 @@ char	*ft_strchr(const char *str, int ch)
 	if (str[indx] == '\0' && chr == '\0')
 		return ((char *)&str[indx]);
 	return (NULL);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	char	*str;
+	size_t	i;
+
+	str = (char *)s;
+	i = 0;
+	while (i < n)
+	{
+		str[i] = '\0';
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t elementCount, size_t elementSize)
+{
+	char	*res;
+
+	res = malloc(elementSize * elementCount);
+	if (!res)
+		return (NULL);
+	ft_bzero(res, elementSize * elementCount);
+	return (res);
 }
