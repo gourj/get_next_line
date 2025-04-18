@@ -6,7 +6,7 @@
 /*   By: agurdzhi <agurdzhi@student.42yerevan.am>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 00:54:18 by agurdzhi          #+#    #+#             */
-/*   Updated: 2025/04/18 10:17:05 by agurdzhi         ###   ########.fr       */
+/*   Updated: 2025/04/18 10:22:26 by agurdzhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ void	ft_bzero(void *s, size_t n)
 	}
 }
 
-void	*ft_calloc(size_t elementCount, size_t elementSize)
+void	*ft_calloc(size_t count, size_t size)
 {
-	char	*res;
+	char	*result;
 
-	res = malloc(elementSize * elementCount);
-	if (!res)
+	result = (char *)malloc(count * size);
+	if (!result)
 		return (NULL);
-	ft_bzero(res, elementSize * elementCount);
-	return (res);
+	ft_bzero(result, count * size);
+	return (result);
 }
