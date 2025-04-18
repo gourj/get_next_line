@@ -6,7 +6,7 @@
 /*   By: agurdzhi <agurdzhi@student.42yerevan.am>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 20:00:11 by agurdzhi          #+#    #+#             */
-/*   Updated: 2025/04/18 09:39:06 by agurdzhi         ###   ########.fr       */
+/*   Updated: 2025/04/18 10:16:41 by agurdzhi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,8 @@ char	*ft_read_fd(int fd, char *read_into)
 	char	*chunk;
 
 	if (!read_into)
-	{
-		free(read_into);
 		return (NULL);
-	}
-	chunk = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	chunk = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!chunk)
 		return (NULL);
 	bytes_read = 1;
@@ -103,7 +100,7 @@ char	*ft_read_fd(int fd, char *read_into)
 		chunk[bytes_read] = 0;
 		read_into = ft_append(read_into, chunk);
 		if (ft_strchr(chunk, '\n'))
-			break;
+			break ;
 	}
 	free(chunk);
 	return (read_into);
@@ -121,11 +118,13 @@ char	*get_next_line(int fd)
 		combined_chunks = (char *)ft_calloc(1, sizeof(char));
 		if (!combined_chunks)
 			return (NULL);
-		combined_chunks[0] = '\0';
 	}
 	combined_chunks = ft_read_fd(fd, combined_chunks);
 	if (!combined_chunks)
+	{
+		free(combined_chunks);
 		return (NULL);
+	}
 	line = ft_extract_line(combined_chunks);
 	if (!line)
 	{
